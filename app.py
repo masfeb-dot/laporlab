@@ -14,7 +14,7 @@ import pandas as pd # Import library pandas untuk mengelola data
 app = Flask(__name__)
 
 # Membuka file akses kunci firebase
-cred = credentials.Certificate("key.json")
+cred = credentials.Certificate("project-skripsi-febri-firebase-adminsdk-kbykd-bb63314bb7.json")
 # Mengambil akses ke firebase database firestore
 firebase_admin.initialize_app(cred)
 # Mengakses firestore dari firebase ke dalam bentuk client
