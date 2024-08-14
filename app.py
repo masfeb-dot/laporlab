@@ -55,23 +55,23 @@ for doc in documents:
     data.append(doc.to_dict())
     data_without_time.append(doc.to_dict()[list(doc.to_dict().keys())[0]])
 
-pd_data = pd.DataFrame({
-    "detail_kerusakan": [i['detail_kerusakan'] for i in data_without_time],
-    "user": [i['user'] for i in data_without_time],
-    "komputer": [i['komputer'] for i in data_without_time],
-    "lab": [i['lab'] for i in data_without_time],
-    "kerusakan_komputer": [i['kerusakan_komputer'] for i in data_without_time],
-    "nilai_kerusakan": [variable_kerusakan[i['kerusakan_komputer']] for i in data_without_time],
-})
+# pd_data = pd.DataFrame({
+#     "detail_kerusakan": [i['detail_kerusakan'] for i in data_without_time],
+#     "user": [i['user'] for i in data_without_time],
+#     "komputer": [i['komputer'] for i in data_without_time],
+#     "lab": [i['lab'] for i in data_without_time],
+#     "kerusakan_komputer": [i['kerusakan_komputer'] for i in data_without_time],
+#     "nilai_kerusakan": [variable_kerusakan[i['kerusakan_komputer']] for i in data_without_time],
+# })
 
-# Menginisialisasikan data untuk di latih pada model K-Means
-x = [[i] for i in list(pd_data['nilai_kerusakan'])]
+# # Menginisialisasikan data untuk di latih pada model K-Means
+# x = [[i] for i in list(pd_data['nilai_kerusakan'])]
 
-# Menginisialisasikan model K-Means
-kmeans = KMeans(n_clusters=centers, random_state=42)
+# # Menginisialisasikan model K-Means
+# kmeans = KMeans(n_clusters=centers, random_state=42)
 
-# Melatih model K-Means
-kmeans.fit(x)
+# # Melatih model K-Means
+# kmeans.fit(x)
 
 @app.route("/")
 def Home():
@@ -79,73 +79,73 @@ def Home():
         "message": "API Berhasil Berjalan"
     })
 
-@app.route('/riwayat_kerusakan', methods=['GET'])
-def AmbilData():
-    # Mengambil semua dokumen dari koleksi "laporanlab" di database.
-    documents = db.collection("laporanlab").stream()
+# @app.route('/riwayat_kerusakan', methods=['GET'])
+# def AmbilData():
+#     # Mengambil semua dokumen dari koleksi "laporanlab" di database.
+#     documents = db.collection("laporanlab").stream()
 
-    # Membuat daftar kosong untuk menyimpan data dari dokumen yang diambil.
-    data = []
+#     # Membuat daftar kosong untuk menyimpan data dari dokumen yang diambil.
+#     data = []
 
-    # Membuat daftar kosong untuk menyimpan data kerusakan ringan dan berat.
-    kerusakan_ringan = []
-    kerusakan_berat = []
+#     # Membuat daftar kosong untuk menyimpan data kerusakan ringan dan berat.
+#     kerusakan_ringan = []
+#     kerusakan_berat = []
 
-    # Loop untuk memproses setiap dokumen yang diambil dari koleksi "laporanlab".
-    for doc in documents:
-        # Menyimpan data dokumen dalam bentuk dictionary dan menambahkan waktu/dokumen ID ke dalam 'data'.
-        data.append({
-            'doc': doc.to_dict(),
-            'time': doc.id
-        })
+#     # Loop untuk memproses setiap dokumen yang diambil dari koleksi "laporanlab".
+#     for doc in documents:
+#         # Menyimpan data dokumen dalam bentuk dictionary dan menambahkan waktu/dokumen ID ke dalam 'data'.
+#         data.append({
+#             'doc': doc.to_dict(),
+#             'time': doc.id
+#         })
 
-    # Loop untuk mengubah nilai kerusakan_komputer dari dokumen berdasarkan nilai yang ada di variable_kerusakan.
-    for i in data:
-        for j in i['doc']:
-            # Mengganti nilai 'kerusakan_komputer' di setiap entry dokumen dengan nilai yang sesuai dari variable_kerusakan.
-            i['doc'][j]['kerusakan_komputer'] = variable_kerusakan[i['doc'][j]['kerusakan_komputer']]
+#     # Loop untuk mengubah nilai kerusakan_komputer dari dokumen berdasarkan nilai yang ada di variable_kerusakan.
+#     for i in data:
+#         for j in i['doc']:
+#             # Mengganti nilai 'kerusakan_komputer' di setiap entry dokumen dengan nilai yang sesuai dari variable_kerusakan.
+#             i['doc'][j]['kerusakan_komputer'] = variable_kerusakan[i['doc'][j]['kerusakan_komputer']]
 
-    # Loop untuk memprediksi kategori kerusakan (ringan/berat) berdasarkan model KMeans dan mengkategorikan data.
-    for i in data:
-        for j in i['doc']:
-            # Menggunakan model KMeans untuk memprediksi apakah kerusakan komputer adalah ringan atau berat.
-            result = kmeans.predict([[i['doc'][j]['kerusakan_komputer']]])
+#     # Loop untuk memprediksi kategori kerusakan (ringan/berat) berdasarkan model KMeans dan mengkategorikan data.
+#     for i in data:
+#         for j in i['doc']:
+#             # Menggunakan model KMeans untuk memprediksi apakah kerusakan komputer adalah ringan atau berat.
+#             result = kmeans.predict([[i['doc'][j]['kerusakan_komputer']]])
             
-            # Jika hasil prediksi adalah kategori 'ringan' (diasumsikan hasil prediksi '1' adalah ringan),
-            # maka data tersebut dimasukkan ke dalam daftar kerusakan_ringan.
-            if result[0] == 1:
-                kerusakan_ringan.append({
-                    "time": j,
-                    "data": i['doc'][j],
-                    "tanggal": i['time'],
-                })
-            # Jika hasil prediksi bukan kategori 'ringan', maka dianggap sebagai kerusakan berat dan
-            # data tersebut dimasukkan ke dalam daftar kerusakan_berat.
-            else:
-                kerusakan_berat.append({
-                    "time": j,
-                    "data": i['doc'][j],
-                    "tanggal": i['time'],
-                })
+#             # Jika hasil prediksi adalah kategori 'ringan' (diasumsikan hasil prediksi '1' adalah ringan),
+#             # maka data tersebut dimasukkan ke dalam daftar kerusakan_ringan.
+#             if result[0] == 1:
+#                 kerusakan_ringan.append({
+#                     "time": j,
+#                     "data": i['doc'][j],
+#                     "tanggal": i['time'],
+#                 })
+#             # Jika hasil prediksi bukan kategori 'ringan', maka dianggap sebagai kerusakan berat dan
+#             # data tersebut dimasukkan ke dalam daftar kerusakan_berat.
+#             else:
+#                 kerusakan_berat.append({
+#                     "time": j,
+#                     "data": i['doc'][j],
+#                     "tanggal": i['time'],
+#                 })
 
-    # Loop untuk mengembalikan nilai kerusakan_komputer di daftar kerusakan_ringan ke nilai awalnya
-    # berdasarkan nilai yang ada di swapped_variable_kerusakan.
-    for i in kerusakan_ringan:
-        i["data"]['kerusakan_komputer'] = swapped_variable_kerusakan[i["data"]['kerusakan_komputer']]
+#     # Loop untuk mengembalikan nilai kerusakan_komputer di daftar kerusakan_ringan ke nilai awalnya
+#     # berdasarkan nilai yang ada di swapped_variable_kerusakan.
+#     for i in kerusakan_ringan:
+#         i["data"]['kerusakan_komputer'] = swapped_variable_kerusakan[i["data"]['kerusakan_komputer']]
 
-    # Loop untuk mengembalikan nilai kerusakan_komputer di daftar kerusakan_berat ke nilai awalnya
-    # berdasarkan nilai yang ada di swapped_variable_kerusakan.
-    for i in kerusakan_berat:
-        i["data"]['kerusakan_komputer'] = swapped_variable_kerusakan[i["data"]['kerusakan_komputer']]
+#     # Loop untuk mengembalikan nilai kerusakan_komputer di daftar kerusakan_berat ke nilai awalnya
+#     # berdasarkan nilai yang ada di swapped_variable_kerusakan.
+#     for i in kerusakan_berat:
+#         i["data"]['kerusakan_komputer'] = swapped_variable_kerusakan[i["data"]['kerusakan_komputer']]
 
-    # Mengembalikan hasil akhir dalam bentuk JSON yang terdiri dari kategori kerusakan komputer,
-    # yaitu kerusakan berat dan kerusakan ringan.
-    return jsonify({
-        "kategori_kerusakan": {
-            "kerusakan_berat": kerusakan_berat,
-            "kerusakan_ringan": kerusakan_ringan,
-        }
-    })
+#     # Mengembalikan hasil akhir dalam bentuk JSON yang terdiri dari kategori kerusakan komputer,
+#     # yaitu kerusakan berat dan kerusakan ringan.
+#     return jsonify({
+#         "kategori_kerusakan": {
+#             "kerusakan_berat": kerusakan_berat,
+#             "kerusakan_ringan": kerusakan_ringan,
+#         }
+#     })
 
 
 if __name__ == "__main__":
