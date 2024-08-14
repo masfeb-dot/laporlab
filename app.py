@@ -13,9 +13,9 @@ import pandas as pd # Import library pandas untuk mengelola data
 # Menjalankan Web Service
 app = Flask(__name__)
 
-# # Membuka file akses kunci firebase
-# cred = credentials.Certificate("key.json")
-# # Mengambil akses ke firebase database firestore
+# Membuka file akses kunci firebase
+cred = credentials.Certificate("key.json")
+# Mengambil akses ke firebase database firestore
 # firebase_admin.initialize_app(cred)
 # # Mengakses firestore dari firebase ke dalam bentuk client
 # db = firestore.client()
