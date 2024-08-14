@@ -20,23 +20,23 @@ firebase_admin.initialize_app(cred)
 # Mengakses firestore dari firebase ke dalam bentuk client
 db = firestore.client()
 
-# # Menginisialisasikan nilai-nilai variabel ke dalam bentuk angka
-# variable_kerusakan = {
-#     "mati": 10,
-#     "hidup": 1,
-#     "blue_screen": 9,
-#     "komponen_tidak_terdeteksi": 4,
-#     "tidak_ada_koneksi": 3,
-#     "tampilan_buram": 5,
-#     "no_display": 8,
-#     "bunyi_aneh": 2,
-#     "tidak_ada_tampilan": 7,
-#     "tidak_dingin": 6,
-#     "tidak_ada_kerusakan": 0,
-# }
+# Menginisialisasikan nilai-nilai variabel ke dalam bentuk angka
+variable_kerusakan = {
+    "mati": 10,
+    "hidup": 1,
+    "blue_screen": 9,
+    "komponen_tidak_terdeteksi": 4,
+    "tidak_ada_koneksi": 3,
+    "tampilan_buram": 5,
+    "no_display": 8,
+    "bunyi_aneh": 2,
+    "tidak_ada_tampilan": 7,
+    "tidak_dingin": 6,
+    "tidak_ada_kerusakan": 0,
+}
 
-# # Menukar key-value pada variabel "variable_kerusakan"
-# swapped_variable_kerusakan = {value : key for key, value in variable_kerusakan.items()}
+# Menukar key-value pada variabel "variable_kerusakan"
+swapped_variable_kerusakan = {value : key for key, value in variable_kerusakan.items()}
 
 ### Hyperparameters variabel untuk K-Means ###
 # Menentukan banyak label
