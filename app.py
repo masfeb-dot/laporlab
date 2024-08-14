@@ -38,22 +38,22 @@ variable_kerusakan = {
 # Menukar key-value pada variabel "variable_kerusakan"
 swapped_variable_kerusakan = {value : key for key, value in variable_kerusakan.items()}
 
-### Hyperparameters variabel untuk K-Means ###
+# ## Hyperparameters variabel untuk K-Means ###
 # Menentukan banyak label
-# n_features = 2
-# # Menentukan nilai tengah dalam K-Means
-# centers = 2
-##############################################
+n_features = 2
+# Menentukan nilai tengah dalam K-Means
+centers = 2
+#############################################
 
 # Mengakses firestore database "kmeans" di dalam database firebase dengan metode stream
-# documents = db.collection("kmeans").stream()
+documents = db.collection("kmeans").stream()
 
-# data = []
-# data_without_time = []
+data = []
+data_without_time = []
 
-# for doc in documents:
-#     data.append(doc.to_dict())
-#     data_without_time.append(doc.to_dict()[list(doc.to_dict().keys())[0]])
+for doc in documents:
+    data.append(doc.to_dict())
+    data_without_time.append(doc.to_dict()[list(doc.to_dict().keys())[0]])
 
 # pd_data = pd.DataFrame({
 #     "detail_kerusakan": [i['detail_kerusakan'] for i in data_without_time],
