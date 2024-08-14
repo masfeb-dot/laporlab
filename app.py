@@ -13,47 +13,47 @@ import pandas as pd # Import library pandas untuk mengelola data
 # Menjalankan Web Service
 app = Flask(__name__)
 
-# Membuka file akses kunci firebase
-cred = credentials.Certificate("key.json")
-# Mengambil akses ke firebase database firestore
-firebase_admin.initialize_app(cred)
-# Mengakses firestore dari firebase ke dalam bentuk client
-db = firestore.client()
+# # Membuka file akses kunci firebase
+# cred = credentials.Certificate("key.json")
+# # Mengambil akses ke firebase database firestore
+# firebase_admin.initialize_app(cred)
+# # Mengakses firestore dari firebase ke dalam bentuk client
+# db = firestore.client()
 
-# Menginisialisasikan nilai-nilai variabel ke dalam bentuk angka
-variable_kerusakan = {
-    "mati": 10,
-    "hidup": 1,
-    "blue_screen": 9,
-    "komponen_tidak_terdeteksi": 4,
-    "tidak_ada_koneksi": 3,
-    "tampilan_buram": 5,
-    "no_display": 8,
-    "bunyi_aneh": 2,
-    "tidak_ada_tampilan": 7,
-    "tidak_dingin": 6,
-    "tidak_ada_kerusakan": 0,
-}
+# # Menginisialisasikan nilai-nilai variabel ke dalam bentuk angka
+# variable_kerusakan = {
+#     "mati": 10,
+#     "hidup": 1,
+#     "blue_screen": 9,
+#     "komponen_tidak_terdeteksi": 4,
+#     "tidak_ada_koneksi": 3,
+#     "tampilan_buram": 5,
+#     "no_display": 8,
+#     "bunyi_aneh": 2,
+#     "tidak_ada_tampilan": 7,
+#     "tidak_dingin": 6,
+#     "tidak_ada_kerusakan": 0,
+# }
 
-# Menukar key-value pada variabel "variable_kerusakan"
-swapped_variable_kerusakan = {value : key for key, value in variable_kerusakan.items()}
+# # Menukar key-value pada variabel "variable_kerusakan"
+# swapped_variable_kerusakan = {value : key for key, value in variable_kerusakan.items()}
 
 ### Hyperparameters variabel untuk K-Means ###
 # Menentukan banyak label
-n_features = 2
-# Menentukan nilai tengah dalam K-Means
-centers = 2
+# n_features = 2
+# # Menentukan nilai tengah dalam K-Means
+# centers = 2
 ##############################################
 
 # Mengakses firestore database "kmeans" di dalam database firebase dengan metode stream
-documents = db.collection("kmeans").stream()
+# documents = db.collection("kmeans").stream()
 
-data = []
-data_without_time = []
+# data = []
+# data_without_time = []
 
-for doc in documents:
-    data.append(doc.to_dict())
-    data_without_time.append(doc.to_dict()[list(doc.to_dict().keys())[0]])
+# for doc in documents:
+#     data.append(doc.to_dict())
+#     data_without_time.append(doc.to_dict()[list(doc.to_dict().keys())[0]])
 
 # pd_data = pd.DataFrame({
 #     "detail_kerusakan": [i['detail_kerusakan'] for i in data_without_time],
