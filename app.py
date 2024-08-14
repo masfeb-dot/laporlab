@@ -16,9 +16,9 @@ app = Flask(__name__)
 # Membuka file akses kunci firebase
 cred = credentials.Certificate("key.json")
 # Mengambil akses ke firebase database firestore
-# firebase_admin.initialize_app(cred)
-# # Mengakses firestore dari firebase ke dalam bentuk client
-# db = firestore.client()
+firebase_admin.initialize_app(cred)
+# Mengakses firestore dari firebase ke dalam bentuk client
+db = firestore.client()
 
 # # Menginisialisasikan nilai-nilai variabel ke dalam bentuk angka
 # variable_kerusakan = {
